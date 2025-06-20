@@ -9,12 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@payloadcms/db-vercel-postgres": "^3.43.0",
+    "@payloadcms/next": "^3.43.0",
+    "@payloadcms/payload-cloud": "^3.43.0",
+    "@payloadcms/richtext-lexical": "^3.43.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "graphql": "^16.11.0",
     "lucide-react": "^0.513.0",
     "next": "15.3.3",
+    "payload": "^3.43.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sharp": "^0.34.2",
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {

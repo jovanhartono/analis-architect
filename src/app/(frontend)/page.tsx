@@ -2,6 +2,8 @@ import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Icon from "./icon0.svg";
+import { getPayload } from "payload";
+import config from "@payload-config"
 
 const projectPreviewLinks = [
   "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-1-SBNCz4N340QWiOIA7I3qm7kiFi7Vzf.webp",
@@ -11,7 +13,15 @@ const projectPreviewLinks = [
   "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-5-eJeBWzysG9LsZFoklD7xyWAjQPwCj4.webp",
 ];
 
-export default function Home() {
+export default async function Home() {
+  const payload = await getPayload({ config });
+  const users = await payload.find({
+    collection: 'users',
+  })
+
+  console.log(users);
+
+
   return (
     <main>
       <header className="z-50 fixed top-0 h-18 p-4 lg:px-10">
