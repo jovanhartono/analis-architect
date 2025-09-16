@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { GSAPProvider } from "@/app/(frontend)/provider/gsap-provider";
+import { Header } from "@/app/(frontend)/components/header";
 
 const inter = Inter({
   variable: "--font-inter-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Analis Architects" />
       </head>
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+        <Header />
         <GSAPProvider>{children}</GSAPProvider>
       </body>
     </html>

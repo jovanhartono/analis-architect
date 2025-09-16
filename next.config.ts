@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
+    minimumCacheTTL: 3600 * 24 * 30 * 12, // 1 year
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {

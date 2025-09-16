@@ -1,76 +1,59 @@
-"use client";
+// "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/app/(frontend)/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import Icon from "./icon0.svg";
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
+import { Suspense } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
+import { payload } from "@/app/(frontend)/lib/payload";
+import { HomeCarousel } from "@/app/(frontend)/components/home-carousel";
 
 gsap.registerPlugin(SplitText);
 
-const projectPreviewLinks = [
-  "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-1-SBNCz4N340QWiOIA7I3qm7kiFi7Vzf.webp",
-  "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-2-yVXL1mELp4CnRYJkMlTGEdEDsj67vo.webp",
-  "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-3-GNg2MQDxe03w9awlWW3Aco1Bd91YmD.webp",
-  "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-4-taBYboLgl1CbCBH1bU3qYfbYn39Ldz.webp",
-  "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-5-eJeBWzysG9LsZFoklD7xyWAjQPwCj4.webp",
-];
-
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  useGSAP(
-    () => {
-      gsap.to("img", {
-        autoAlpha: 1,
-        duration: 1,
-        ease: "expo.out",
-      });
+  // const containerRef = useRef<HTMLDivElement>(null);
+  // useGSAP(
+  //   () => {
+  //     gsap.to("img", {
+  //       autoAlpha: 1,
+  //       duration: 1,
+  //       ease: "expo.out",
+  //     });
 
-      SplitText.create("h1", {
-        type: "chars",
-        onSplit(self) {
-          gsap.set("h1", { autoAlpha: 1 });
+  //     SplitText.create("h1", {
+  //       type: "chars",
+  //       onSplit(self) {
+  //         gsap.set("h1", { autoAlpha: 1 });
 
-          return gsap.from(self.chars, {
-            duration: 0.75,
-            autoAlpha: 0,
-            stagger: 0.03,
-            ease: "expo.in",
-          });
-        },
-      });
+  //         return gsap.from(self.chars, {
+  //           duration: 0.75,
+  //           autoAlpha: 0,
+  //           stagger: 0.03,
+  //           ease: "expo.in",
+  //         });
+  //       },
+  //     });
 
-      gsap.to(".stagger", {
-        opacity: 1,
-        y: 0,
-        stagger: 0.1,
-        delay: 1,
-        ease: "power2.out",
-      });
-    },
-    { scope: containerRef }
-  );
+  //     gsap.to(".stagger", {
+  //       opacity: 1,
+  //       y: 0,
+  //       stagger: 0.1,
+  //       delay: 1,
+  //       ease: "power2.out",
+  //     });
+  //   },
+  //   { scope: containerRef }
+  // );
 
   return (
     <main>
-      <header className="z-50 fixed top-0 h-18 p-4 lg:px-10">
-        <Image src={Icon} alt="header logo" className="invert size-8" />
-      </header>
-      <section
-        ref={containerRef}
+      <Hero />
+      {/* <section
+        // ref={containerRef}
         className="flex flex-col mx-auto items-center justify-end text-white p-4 gap-y-6 relative h-[100svh] z-0"
       >
-        <Image
-          priority
-          fill
-          src="https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/project-3-Wf6G84tn1r50vjk6ReXpEEUciMkgHc.jpg"
-          alt="project background z-0"
-          className="brightness-50 object-cover opacity-0 invisible"
-          sizes="100vw"
-        />
         <div className="z-10 absolute bottom-10 left-0 right-0 px-4 lg:px-10">
           <h1 className="text-4xl lg:text-7xl tracking-tighter opacity-0 invisible">
             Under Construction
@@ -120,29 +103,25 @@ export default function Home() {
             </ul>
           </div>
         </div>
-      </section>
-      <section className="z-10">
-        <ul className="grid grid-cols-2">
-          {projectPreviewLinks.map((link, index) => (
-            <li
-              key={index}
-              className={cn(
-                "relative aspect-square w-full col-span-2 sm:col-span-1",
-                {
-                  "!col-span-2": index + 1 === projectPreviewLinks.length,
-                }
-              )}
-            >
-              <Image
-                fill
-                alt={`project-${index + 1}`}
-                src={link}
-                className="object-cover"
-              />
-            </li>
-          ))}
-        </ul>
-      </section>
+      </section> */}
     </main>
+  );
+}
+
+export async function Hero() {
+  const architectures = await payload.find({
+    collection: "architectures",
+    pagination: false,
+    where: {
+      gallery: {
+        exists: true,
+      },
+    },
+  });
+
+  return (
+    <Suspense>
+      <HomeCarousel items={architectures.docs} />
+    </Suspense>
   );
 }
