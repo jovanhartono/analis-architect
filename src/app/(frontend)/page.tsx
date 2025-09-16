@@ -50,11 +50,11 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      {/* <section
+      <section
         // ref={containerRef}
         className="flex flex-col mx-auto items-center justify-end text-white p-4 gap-y-6 relative h-[100svh] z-0"
       >
-        <div className="z-10 absolute bottom-10 left-0 right-0 px-4 lg:px-10">
+        <div className="z-10 absolute bottom-10 left-0 right-0 padding">
           <h1 className="text-4xl lg:text-7xl tracking-tighter opacity-0 invisible">
             Under Construction
           </h1>
@@ -103,7 +103,7 @@ export default function Home() {
             </ul>
           </div>
         </div>
-      </section> */}
+      </section>
     </main>
   );
 }

@@ -35,29 +35,35 @@ export function HomeCarousel({ items }: { items: Architecture[] }) {
           .filter((item) => item.gallery)
           .map((item, i) => (
             <CarouselItem key={item.id} className="relative">
-              <Image
-                fill
-                priority={i === 0}
-                quality={100}
-                sizes="100vw"
-                src={(item.gallery?.[0] as Media).url!}
-                alt={`slide-${i}`}
-                className="object-cover brightness-40"
-              />
-              <div className="z-10 absolute bottom-20 left-0 right-0 px-4 lg:px-10 text-white">
-                <span className="font-medium ml-1 lg:absolute lg:right-10 lg:bottom-0">
-                  {(item.projectType as ProjectType).type}
-                </span>
-                <h1 className="text-5xl lg:text-7xl tracking-tighter mt-3">
-                  {item.name}
-                </h1>
-                <ul className="ml-1 lg:w-1/2 space-y-3 mt-3 lg:mt-6">
-                  <li className="text-pretty max-lg:text-sm opacity-85">
-                    {item.tagline}
-                  </li>
-                  <li className="font-medium">{item.site}</li>
-                </ul>
-              </div>
+              <Link
+                prefetch
+                href={`/projects/${item.id}`}
+                className="cursor-default"
+              >
+                <Image
+                  fill
+                  priority={i === 0}
+                  quality={100}
+                  sizes="100vw"
+                  src={(item.gallery?.[0] as Media).url!}
+                  alt={`slide-${i}`}
+                  className="object-cover brightness-40"
+                />
+                <div className="z-10 absolute bottom-20 left-0 right-0 px-4 lg:px-10 text-white">
+                  <span className="font-medium ml-1 lg:absolute lg:right-10 lg:bottom-0">
+                    {(item.projectType as ProjectType).type}
+                  </span>
+                  <h1 className="text-5xl lg:text-7xl tracking-tighter mt-3">
+                    {item.name}
+                  </h1>
+                  <ul className="ml-1 lg:w-1/2 space-y-3 mt-3 lg:mt-6">
+                    <li className="text-pretty max-lg:text-sm opacity-85">
+                      {item.tagline}
+                    </li>
+                    <li className="font-medium">{item.site}</li>
+                  </ul>
+                </div>
+              </Link>
             </CarouselItem>
           ))}
       </CarouselContent>

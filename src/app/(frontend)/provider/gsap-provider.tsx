@@ -14,9 +14,11 @@ export function GSAPProvider({ children }: { children: ReactNode }) {
   useGSAP(
     () => {
       ScrollSmoother.create({
-        smooth: 1.25,
+        smooth: 1,
         effects: true,
+        ignoreMobileResize: true,
         smoothTouch: 0.1,
+        normalizeScroll: true,
       });
     },
     {
@@ -26,7 +28,9 @@ export function GSAPProvider({ children }: { children: ReactNode }) {
   );
   return (
     <div id="smooth-wrapper">
-      <div id="smooth-content">{children}</div>
+      <div id="smooth-content" className="will-change-transform">
+        {children}
+      </div>
     </div>
   );
 }
