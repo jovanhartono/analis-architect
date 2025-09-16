@@ -1,13 +1,15 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from "payload";
 
 export const Users: CollectionConfig = {
-  slug: 'users',
+  slug: "users",
   admin: {
-    useAsTitle: 'email',
+    useAsTitle: "username",
   },
-  auth: true,
-  fields: [
-    // Email added by default
-    // Add more fields as needed
-  ],
-}
+  access: {
+    create: ({ req }) => req.user?.id.toString() === process.env.ROOT_USERNAME,
+  },
+  auth: {
+    loginWithUsername: true,
+  },
+  fields: [],
+};

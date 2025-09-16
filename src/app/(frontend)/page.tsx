@@ -1,9 +1,15 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Icon from "./icon0.svg";
-import { getPayload } from "payload";
-import config from "@payload-config"
+import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(SplitText);
 
 const projectPreviewLinks = [
   "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-1-SBNCz4N340QWiOIA7I3qm7kiFi7Vzf.webp",
@@ -13,38 +19,68 @@ const projectPreviewLinks = [
   "https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/webp/project-5-eJeBWzysG9LsZFoklD7xyWAjQPwCj4.webp",
 ];
 
-export default async function Home() {
-  const payload = await getPayload({ config });
-  const users = await payload.find({
-    collection: 'users',
-  })
+export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  useGSAP(
+    () => {
+      gsap.to("img", {
+        autoAlpha: 1,
+        duration: 1,
+        ease: "expo.out",
+      });
 
-  console.log(users);
+      SplitText.create("h1", {
+        type: "chars",
+        onSplit(self) {
+          gsap.set("h1", { autoAlpha: 1 });
 
+          return gsap.from(self.chars, {
+            duration: 0.75,
+            autoAlpha: 0,
+            stagger: 0.03,
+            ease: "expo.in",
+          });
+        },
+      });
+
+      gsap.to(".stagger", {
+        opacity: 1,
+        y: 0,
+        stagger: 0.1,
+        delay: 1,
+        ease: "power2.out",
+      });
+    },
+    { scope: containerRef }
+  );
 
   return (
     <main>
       <header className="z-50 fixed top-0 h-18 p-4 lg:px-10">
         <Image src={Icon} alt="header logo" className="invert size-8" />
       </header>
-      <section className="flex flex-col mx-auto items-center justify-end text-white p-4 gap-y-6 relative h-[100lvh]">
+      <section
+        ref={containerRef}
+        className="flex flex-col mx-auto items-center justify-end text-white p-4 gap-y-6 relative h-[100svh] z-0"
+      >
         <Image
           priority
-          quality={100}
           fill
           src="https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com/project-3-Wf6G84tn1r50vjk6ReXpEEUciMkgHc.jpg"
           alt="project background z-0"
-          className="brightness-50 object-cover"
+          className="brightness-50 object-cover opacity-0 invisible"
           sizes="100vw"
         />
         <div className="z-10 absolute bottom-10 left-0 right-0 px-4 lg:px-10">
-          <h1 className="text-4xl lg:text-7xl tracking-tighter">
+          <h1 className="text-4xl lg:text-7xl tracking-tighter opacity-0 invisible">
             Under Construction
           </h1>
           <div className="flex flex-col gap-y-1 mt-6">
-            <p>You can reach us at</p>
-            <ul className="space-y-0.5">
-              <li>
+            <p className="stagger translate-y-4 opacity-0">
+              You can reach us at
+            </p>
+            <ul className="space-y-0.5 *:opacity-0 *:translate-y-4">
+              <li className="stagger">
                 Whatsapp:&nbsp;
                 <a
                   href="https://api.whatsapp.com/send?phone=6287779119390"
@@ -55,7 +91,7 @@ export default async function Home() {
                   087779119390
                 </a>
               </li>
-              <li>
+              <li className="stagger">
                 Instagram:&nbsp;
                 <a
                   href="https://www.instagram.com/analisarchitects"
@@ -66,11 +102,11 @@ export default async function Home() {
                   analisarchitects
                 </a>
               </li>
-              <li className="text-balance">
+              <li className="stagger text-balance">
                 Address : Ruko Elang Laut Boulevard Blok D No.60, Pantai Indah
                 Kapuk, Jakarta Utara, Indonesia
               </li>
-              <li>
+              <li className="stagger">
                 Our&nbsp;
                 <a
                   target="_blank"
@@ -85,7 +121,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      <section>
+      <section className="z-10">
         <ul className="grid grid-cols-2">
           {projectPreviewLinks.map((link, index) => (
             <li
