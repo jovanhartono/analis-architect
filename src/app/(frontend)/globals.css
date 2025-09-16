@@ -130,4 +130,8 @@
   .padding {
     @apply px-4 lg:px-10;
   }
+
+  .padding-y {
+    @apply py-4 lg:py-10;
+  }
 }

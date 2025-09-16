@@ -23,7 +23,7 @@ export const Header = memo(function Header() {
   return (
     <header
       className={cn(
-        "z-50 fixed top-0 h-18 padding inset-x-0 bg-white transition-colors duration-200 ease-in-out flex items-center text-black",
+        "z-50 fixed top-0 h-18 padding inset-x-0 bg-white transition-colors duration-400 ease-in-out flex items-center text-black",
         invertColor && "bg-transparent text-white"
       )}
     >
@@ -34,7 +34,7 @@ export const Header = memo(function Header() {
           src={Icon}
           alt="logo"
           className={cn(
-            "size-8 transition duration-200 ease-in-out cursor-pointer",
+            "size-8 transition duration-400 ease-in-out cursor-pointer",
             {
               invert: invertColor,
             }
@@ -42,9 +42,9 @@ export const Header = memo(function Header() {
         />
       </Link>
 
-      <nav className="ml-auto space-x-4 font-medium tracking-widest uppercase text-xs">
+      <nav className="ml-auto space-x-4 font-medium tracking-widest uppercase text-xs [&_>_a]:hover:font-medium">
         <Link prefetch href="/projects" className="cursor-pointer">
-          Projects
+          Works
         </Link>
         <Link prefetch href="/gallery" className="cursor-pointer">
           Gallery

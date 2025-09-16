@@ -21,10 +21,9 @@ export function HomeCarousel({ items }: { items: Architecture[] }) {
     <Carousel
       className="w-full"
       plugins={[plugin.current]}
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
       opts={{
         loop: true,
+        duration: 60,
       }}
     >
       <CarouselContent
@@ -43,7 +42,6 @@ export function HomeCarousel({ items }: { items: Architecture[] }) {
                 <Image
                   fill
                   priority={i === 0}
-                  quality={100}
                   sizes="100vw"
                   src={(item.gallery?.[0] as Media).url!}
                   alt={`slide-${i}`}

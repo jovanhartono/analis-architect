@@ -1,7 +1,5 @@
-// "use client";
-
 import { cn } from "@/app/(frontend)/lib/utils";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Divide } from "lucide-react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { Suspense } from "react";
@@ -10,8 +8,25 @@ import { SplitText } from "gsap/SplitText";
 import { payload } from "@/app/(frontend)/lib/payload";
 import { HomeCarousel } from "@/app/(frontend)/components/home-carousel";
 
-gsap.registerPlugin(SplitText);
+// gsap.registerPlugin(SplitText);
 
+async function Hero() {
+  const architectures = await payload.find({
+    collection: "architectures",
+    pagination: false,
+    where: {
+      gallery: {
+        exists: true,
+      },
+    },
+  });
+
+  return (
+    <Suspense fallback={<div className="min-h-svh w-full bg-white" />}>
+      <HomeCarousel items={architectures.docs} />
+    </Suspense>
+  );
+}
 export default function Home() {
   // const containerRef = useRef<HTMLDivElement>(null);
   // useGSAP(
@@ -50,78 +65,49 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <section
-        // ref={containerRef}
-        className="flex flex-col mx-auto items-center justify-end text-white p-4 gap-y-6 relative h-[100svh] z-0"
-      >
-        <div className="z-10 absolute bottom-10 left-0 right-0 padding">
-          <h1 className="text-4xl lg:text-7xl tracking-tighter opacity-0 invisible">
-            Under Construction
-          </h1>
-          <div className="flex flex-col gap-y-1 mt-6">
-            <p className="stagger translate-y-4 opacity-0">
-              You can reach us at
-            </p>
-            <ul className="space-y-0.5 *:opacity-0 *:translate-y-4">
-              <li className="stagger">
-                Whatsapp:&nbsp;
-                <a
-                  href="https://api.whatsapp.com/send?phone=6287779119390"
-                  target="_blank"
-                  className="underline underline-offset-2"
-                  rel="noopener noreferrer"
-                >
-                  087779119390
-                </a>
-              </li>
-              <li className="stagger">
-                Instagram:&nbsp;
-                <a
-                  href="https://www.instagram.com/analisarchitects"
-                  target="_blank"
-                  className="underline underline-offset-2"
-                  rel="noopener noreferrer"
-                >
-                  analisarchitects
-                </a>
-              </li>
-              <li className="stagger text-balance">
-                Address : Ruko Elang Laut Boulevard Blok D No.60, Pantai Indah
-                Kapuk, Jakarta Utara, Indonesia
-              </li>
-              <li className="stagger">
-                Our&nbsp;
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://drive.google.com/file/d/1R8QgMq3zsDCP_vs7WoLfZuaUSoLBXXcG/view"
-                  className="underline underline-offset-2 inline-flex gap-x-1 items-center"
-                >
-                  Portfolio <ArrowUpRight className="size-4" />
-                </a>
-              </li>
-            </ul>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-4 gap-x-10 padding padding-y">
+        <div className="shrink-0">
+          <p className="text-lg">About Analis Architect</p>
         </div>
-      </section>
+        <article className="lg:col-span-2 text-left max-w-[120ch] gap-x-10 gap-y-10 grid lg:grid-cols-2 text-balance">
+          <p>
+            Analis Architects is an architecture firm established in 2024, built
+            on the belief that every design holds a unique story waiting to be
+            told. We see architecture not merely as a building, but as a spatial
+            narrative, a composition of shapes, materials, and ideas that speak
+            to both people and place. Each project is an opportunity to explore
+            bold concepts, deeply rooted in local context and shaped by the
+            environment that surrounds it.
+            <br />
+            <br />
+            Founded by Adrian Putra Wahono, a young aspiring architect who is
+            interested in blending modern innovation with timeless aesthetics,
+            and after gaining valuable experience at the renowned KThengono
+            Design Studio, Analis Architects was born from a passion for
+            purposeful design. Our work thrives at the intersection of
+            creativity and purpose, from experimental forms to thoughtful
+            details, always with a commitment to contextual relevance and
+            meaningful design.
+          </p>
+
+          <p>
+            Sustainability and innovation are at the heart of what we do. We
+            explore innovative, contextual solutions that embrace natural
+            elements and local culture, striving for designs that are
+            environmentally responsible and culturally meaningful. Whether
+            it&apos;s a compact urban dwelling or a large-scale public facility,
+            we approach each project with a fresh lens, seeking the unique story
+            that wants to be told through architecture.
+            <br />
+            <br />
+            At Analis Architects, we do not just design buildings, we shape
+            experiences. Every curve, material, and space is intentional, aimed
+            at creating places that inspire, connect, and endure. Allow us to
+            transform your vision into reality, through architecture that
+            resonates, evokes emotion, and establishes a sense of belonging.
+          </p>
+        </article>
+      </div>
     </main>
-  );
-}
-
-export async function Hero() {
-  const architectures = await payload.find({
-    collection: "architectures",
-    pagination: false,
-    where: {
-      gallery: {
-        exists: true,
-      },
-    },
-  });
-
-  return (
-    <Suspense>
-      <HomeCarousel items={architectures.docs} />
-    </Suspense>
   );
 }

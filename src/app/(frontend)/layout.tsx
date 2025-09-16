@@ -3,6 +3,7 @@ import { Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { GSAPProvider } from "@/app/(frontend)/provider/gsap-provider";
 import { Header } from "@/app/(frontend)/components/header";
+import { Footer } from "@/app/(frontend)/components/footer";
 
 const inter = Inter({
   variable: "--font-inter-sans",
@@ -33,7 +34,12 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         <Header />
-        <GSAPProvider>{children}</GSAPProvider>
+        <GSAPProvider>
+          <div className="pb-[72px]">
+            {children}
+            <Footer />
+          </div>
+        </GSAPProvider>
       </body>
     </html>
   );
