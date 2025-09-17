@@ -14,7 +14,7 @@ export function capitalize(input: string): string {
   );
 }
 
-export function isMedia(val: any): val is Media {
+export function isMedia(val: unknown): val is Media {
   if (typeof val !== "object") {
     return false;
   }
