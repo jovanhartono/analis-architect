@@ -7,19 +7,12 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { payload } from "@/app/(frontend)/lib/payload";
 import { HomeCarousel } from "@/app/(frontend)/components/home-carousel";
+import { getArchitectures } from "@/app/(frontend)/actions";
 
 // gsap.registerPlugin(SplitText);
 
 async function Hero() {
-  const architectures = await payload.find({
-    collection: "architectures",
-    pagination: false,
-    where: {
-      gallery: {
-        exists: true,
-      },
-    },
-  });
+  const architectures = await getArchitectures();
 
   return (
     <Suspense fallback={<div className="min-h-svh w-full bg-white" />}>

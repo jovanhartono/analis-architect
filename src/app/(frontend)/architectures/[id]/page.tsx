@@ -1,8 +1,7 @@
 import { capitalize } from "@/app/(frontend)/lib/helper";
 import { payload } from "@/app/(frontend)/lib/payload";
-import { ProjectMarquee } from "@/app/(frontend)/projects/[id]/marquee";
+import { ProjectMarquee } from "@/app/(frontend)/architectures/[id]/marquee";
 import { Media, ProjectType } from "@/payload-types";
-import { convertLexicalToMarkdown } from "@payloadcms/richtext-lexical";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 
 export default async function ProjectDetailPage({

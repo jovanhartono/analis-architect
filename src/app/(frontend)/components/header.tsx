@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Icon from "../icon0.svg";
+import Icon from "../icon1.png";
 import { useDebounce, useWindowScroll } from "@uidotdev/usehooks";
 import { memo, useMemo } from "react";
 import { cn } from "@/app/(frontend)/lib/utils";
@@ -30,9 +30,11 @@ export const Header = memo(function Header() {
       <Link href="/">
         <Image
           priority
-          unoptimized
           src={Icon}
+          width={32}
+          height={32}
           alt="logo"
+          sizes="32w"
           className={cn(
             "size-8 transition duration-400 ease-in-out cursor-pointer",
             {
@@ -43,7 +45,7 @@ export const Header = memo(function Header() {
       </Link>
 
       <nav className="ml-auto space-x-4 font-medium tracking-widest uppercase text-xs [&_>_a]:hover:font-medium">
-        <Link prefetch href="/projects" className="cursor-pointer">
+        <Link prefetch href="/works" className="cursor-pointer">
           Works
         </Link>
         <Link prefetch href="/gallery" className="cursor-pointer">

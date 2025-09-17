@@ -1,7 +1,7 @@
 import { CollectionConfig } from "payload";
 
 export const Interiors: CollectionConfig = {
-  slug: "interios",
+  slug: "interiors",
   labels: {
     singular: "Interior",
     plural: "Interiors",

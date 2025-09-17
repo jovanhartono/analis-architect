@@ -134,4 +134,8 @@
   .padding-y {
     @apply py-4 lg:py-10;
   }
+
+  .margin-header {
+    @apply mt-[72px];
+  }
 }

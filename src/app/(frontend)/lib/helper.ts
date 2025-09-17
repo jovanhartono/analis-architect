@@ -1,3 +1,5 @@
+import { Media } from "@/payload-types";
+
 export function capitalize(input: string): string {
   return (
     input
@@ -10,4 +12,12 @@ export function capitalize(input: string): string {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ")
   );
+}
+
+export function isMedia(val: any): val is Media {
+  if (typeof val !== "object") {
+    return false;
+  }
+
+  return true;
 }

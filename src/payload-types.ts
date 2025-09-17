@@ -70,7 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     architectures: Architecture;
-    interios: Interio;
+    interiors: Interior;
     'project-types': ProjectType;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -81,7 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     architectures: ArchitecturesSelect<false> | ArchitecturesSelect<true>;
-    interios: InteriosSelect<false> | InteriosSelect<true>;
+    interiors: InteriorsSelect<false> | InteriorsSelect<true>;
     'project-types': ProjectTypesSelect<false> | ProjectTypesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -215,9 +215,9 @@ export interface ProjectType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "interios".
+ * via the `definition` "interiors".
  */
-export interface Interio {
+export interface Interior {
   id: number;
   name: string;
   projectType: number | ProjectType;
@@ -267,8 +267,8 @@ export interface PayloadLockedDocument {
         value: number | Architecture;
       } | null)
     | ({
-        relationTo: 'interios';
-        value: number | Interio;
+        relationTo: 'interiors';
+        value: number | Interior;
       } | null)
     | ({
         relationTo: 'project-types';
@@ -378,9 +378,9 @@ export interface ArchitecturesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "interios_select".
+ * via the `definition` "interiors_select".
  */
-export interface InteriosSelect<T extends boolean = true> {
+export interface InteriorsSelect<T extends boolean = true> {
   name?: T;
   projectType?: T;
   site?: T;

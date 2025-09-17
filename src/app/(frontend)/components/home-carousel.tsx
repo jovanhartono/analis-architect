@@ -12,10 +12,15 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRightIcon } from "lucide-react";
+import { GetArchitecturesReturnType } from "@/app/(frontend)/actions";
 
-export function HomeCarousel({ items }: { items: Architecture[] }) {
-  const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+// todo: can also accept interior. make a general type. normalize on Hero
+export function HomeCarousel({
+  items,
+}: {
+  items: GetArchitecturesReturnType["docs"];
+}) {
+  const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
 
   return (
     <Carousel
@@ -23,7 +28,7 @@ export function HomeCarousel({ items }: { items: Architecture[] }) {
       plugins={[plugin.current]}
       opts={{
         loop: true,
-        duration: 60,
+        duration: 50,
       }}
     >
       <CarouselContent
@@ -36,20 +41,21 @@ export function HomeCarousel({ items }: { items: Architecture[] }) {
             <CarouselItem key={item.id} className="relative">
               <Link
                 prefetch
-                href={`/projects/${item.id}`}
-                className="cursor-default"
+                href={`/architectures/${item.id}`}
+                className="cursor-default w-full h-full block"
               >
                 <Image
-                  fill
                   priority={i === 0}
                   sizes="100vw"
                   src={(item.gallery?.[0] as Media).url!}
+                  width={(item.gallery?.[0] as Media).width!}
+                  height={(item.gallery?.[0] as Media).height!}
                   alt={`slide-${i}`}
-                  className="object-cover brightness-40"
+                  className="object-cover brightness-40 w-full h-full"
                 />
-                <div className="z-10 absolute bottom-20 left-0 right-0 px-4 lg:px-10 text-white">
+                <div className="z-10 absolute bottom-20 left-0 right-0 padding text-white">
                   <span className="font-medium ml-1 lg:absolute lg:right-10 lg:bottom-0">
-                    {(item.projectType as ProjectType).type}
+                    Architecture / {(item.projectType as ProjectType).type}
                   </span>
                   <h1 className="text-5xl lg:text-7xl tracking-tighter mt-3">
                     {item.name}

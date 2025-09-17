@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { memo } from "react";
-import logo from "../icon0.svg";
+import logo from "../icon1.png";
 import { siteConfig } from "@/app/(frontend)/lib/site-config";
 import { ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
@@ -27,7 +27,14 @@ export const Footer = memo(function Footer() {
     <footer className="padding ">
       <div className="border-t py-4 lg:py-10 space-y-8 lg:space-y-10">
         <Link href="/" className="flex items-center gap-x-2">
-          <Image unoptimized alt="logo" src={logo} className="size-8" />
+          <Image
+            alt="logo"
+            width={32}
+            height={32}
+            src={logo}
+            sizes="32w"
+            className="size-8"
+          />
           <p className="text-xl tracking-tight">Analis Architect</p>
         </Link>
 
