@@ -20,13 +20,17 @@ export function ProjectMarquee({ images }: { images: string[] }) {
         ]}
         className="flex gap-x-4"
         opts={{
+          align: "start",
           loop: true,
           dragFree: true,
         }}
       >
         <CarouselContent className="will-change-transform">
           {images.map((src, index) => (
-            <CarouselItem className="basis-[min(67%,_400px)] pl-4" key={index}>
+            <CarouselItem
+              className="basis-[min(67%,_400px)] pl-4 will-change-transform"
+              key={index}
+            >
               <Image
                 priority={index <= 3}
                 fetchPriority="high"
