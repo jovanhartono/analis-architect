@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { ScrollTrigger, ScrollSmoother } from "gsap/all";
 
+const mm = gsap.matchMedia();
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
 
 export function GSAPProvider({ children }: { children: ReactNode }) {
@@ -13,12 +14,15 @@ export function GSAPProvider({ children }: { children: ReactNode }) {
 
   useGSAP(
     () => {
-      ScrollSmoother.create({
-        smooth: 1,
-        effects: true,
-        ignoreMobileResize: true,
-        smoothTouch: 0.1,
-        normalizeScroll: true,
+      // Only enable smoother on desktop
+      mm.add("(min-width: 1024px)", () => {
+        ScrollSmoother.create({
+          smooth: 1,
+          effects: true,
+          ignoreMobileResize: true,
+          smoothTouch: false,
+          normalizeScroll: true,
+        });
       });
     },
     {
@@ -26,6 +30,7 @@ export function GSAPProvider({ children }: { children: ReactNode }) {
       revertOnUpdate: true,
     }
   );
+
   return (
     <div id="smooth-wrapper">
       <div id="smooth-content" className="will-change-transform">

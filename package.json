@@ -23,6 +23,7 @@
     "cross-env": "^7.0.3",
     "embla-carousel-auto-scroll": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-fade": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "graphql": "^16.11.0",
     "gsap": "^3.13.0",

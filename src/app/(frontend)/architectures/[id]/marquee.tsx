@@ -5,7 +5,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/app/(frontend)/components/ui/carousel";
-import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import AutoScroll from "embla-carousel-auto-scroll";
 
@@ -22,20 +21,22 @@ export function ProjectMarquee({ images }: { images: string[] }) {
         className="flex gap-x-4"
         opts={{
           loop: true,
-          skipSnaps: true,
           dragFree: true,
         }}
       >
-        <CarouselContent>
+        <CarouselContent className="will-change-transform">
           {images.map((src, index) => (
-            <CarouselItem className="basis-[400] pl-4" key={index}>
+            <CarouselItem className="basis-[min(67%,_400px)] pl-4" key={index}>
               <Image
+                priority={index <= 3}
+                fetchPriority="high"
+                loading="eager"
                 width={400}
                 height={400}
                 sizes="400w"
                 alt={`image-${index}`}
                 src={src}
-                className="aspect-square"
+                className="aspect-square object-cover"
               />
             </CarouselItem>
           ))}
