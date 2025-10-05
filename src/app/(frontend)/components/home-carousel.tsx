@@ -10,15 +10,20 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import Link from "next/link";
-import { GetArchitecturesReturnType } from "@/app/(frontend)/actions";
 import Fade from "embla-carousel-fade";
 
+export type CarouselItem = {
+  title: string;
+  slug: string;
+  site: string;
+  tagline?: string | null;
+  type: string;
+  image: Media;
+  workType: "architecture" | "interior";
+};
+
 // todo: can also accept interior. make a general type. normalize on Hero
-export function HomeCarousel({
-  items,
-}: {
-  items: GetArchitecturesReturnType["docs"];
-}) {
+export function HomeCarousel({ items }: { items: CarouselItem[] }) {
   const plugin = useRef([
     Autoplay({ delay: 5000, stopOnInteraction: false }),
     Fade(),
@@ -35,46 +40,46 @@ export function HomeCarousel({
       }}
     >
       <CarouselContent className="w-full h-[100svh] will-change-transform">
-        {items
-          .filter((item) => item.gallery)
-          .map((item, i) => (
-            <CarouselItem
-              key={item.id}
-              className="relative will-change-transform"
+        {items.map((item, i) => (
+          <CarouselItem key={i} className="relative will-change-transform">
+            <Link
+              prefetch
+              href={
+                item.workType === "architecture"
+                  ? `/architectures/${item.slug}`
+                  : `/interiors/${item.slug}`
+              }
+              className="cursor-default w-full h-full block"
             >
-              <Link
-                prefetch
-                href={`/architectures/${item.id}`}
-                className="cursor-default w-full h-full block"
-              >
-                <Image
-                  priority={i === 0}
-                  fetchPriority="high"
-                  loading="eager"
-                  sizes="100vw"
-                  src={(item.gallery?.[0] as Media).url!}
-                  width={(item.gallery?.[0] as Media).width!}
-                  height={(item.gallery?.[0] as Media).height!}
-                  alt={`slide-${i}`}
-                  className="object-cover brightness-40 w-full h-full"
-                />
-                <div className="z-10 absolute bottom-20 left-0 right-0 padding text-white">
-                  <span className="font-medium ml-1 lg:absolute lg:right-10 lg:bottom-0">
-                    Architecture / {(item.projectType as ProjectType).type}
-                  </span>
-                  <h1 className="text-5xl lg:text-7xl tracking-tighter mt-3">
-                    {item.name}
-                  </h1>
-                  <ul className="ml-1 lg:w-1/2 space-y-3 mt-3 lg:mt-6">
-                    <li className="text-pretty max-lg:text-sm opacity-85">
-                      {item.tagline}
-                    </li>
-                    <li className="font-medium">{item.site}</li>
-                  </ul>
-                </div>
-              </Link>
-            </CarouselItem>
-          ))}
+              <Image
+                priority={i === 0}
+                fetchPriority="high"
+                loading="eager"
+                quality={100}
+                sizes="100vw"
+                src={item.image.url!}
+                width={item.image.width!}
+                height={item.image.height!}
+                alt={`slide-${i}`}
+                className="object-cover brightness-60 w-full h-full"
+              />
+              <div className="z-10 absolute bottom-20 left-0 right-0 padding text-white">
+                <span className="font-medium ml-1 lg:absolute lg:right-10 lg:bottom-0">
+                  Architecture / {item.type}
+                </span>
+                <h1 className="text-5xl lg:text-7xl tracking-tighter mt-3">
+                  {item.title}
+                </h1>
+                <ul className="ml-1 lg:w-1/2 space-y-3 mt-3 lg:mt-6">
+                  <li className="text-pretty max-lg:text-sm opacity-85">
+                    {item.tagline}
+                  </li>
+                  <li className="font-medium">{item.site}</li>
+                </ul>
+              </div>
+            </Link>
+          </CarouselItem>
+        ))}
       </CarouselContent>
     </Carousel>
   );

@@ -24,7 +24,7 @@ const links = [
 
 export const Footer = memo(function Footer() {
   return (
-    <footer className="padding ">
+    <footer className="padding mt-auto">
       <div className="border-t py-4 lg:py-10 space-y-8 lg:space-y-10">
         <Link href="/" className="flex items-center gap-x-2">
           <Image

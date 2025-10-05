@@ -16,8 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title:
-    "Analis Architect – Step Into a World Where Architecture Meets Artistry",
+  title: {
+    template: "%s – Analis Architects",
+    default:
+      "Analis Architect – Step Into a World Where Architecture Meets Artistry",
+  },
   description:
     "Analis Studio excels in seamlessly blending modern innovation with timeless aesthetics, crafting spaces that are not only visually stunning, but also deeply connected to their environment. Our unique approach ensures that each project is a reflection of its environment, tailored to enhance the lives of those who inhabit it.",
 };
@@ -35,7 +38,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         <Header />
         <GSAPProvider>
-          <div className="pb-[72px]">
+          <div className="min-h-screen h-full flex flex-col">
             {children}
             <Footer />
           </div>

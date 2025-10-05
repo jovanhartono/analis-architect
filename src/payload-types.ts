@@ -172,6 +172,7 @@ export interface Media {
 export interface Architecture {
   id: number;
   name: string;
+  slug: string;
   projectType: number | ProjectType;
   year: number;
   award?: string | null;
@@ -187,7 +188,7 @@ export interface Architecture {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -220,6 +221,7 @@ export interface ProjectType {
 export interface Interior {
   id: number;
   name: string;
+  slug: string;
   projectType: number | ProjectType;
   site: string;
   year: number;
@@ -232,7 +234,7 @@ export interface Interior {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -363,6 +365,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface ArchitecturesSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   projectType?: T;
   year?: T;
   award?: T;
@@ -382,6 +385,7 @@ export interface ArchitecturesSelect<T extends boolean = true> {
  */
 export interface InteriorsSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   projectType?: T;
   site?: T;
   year?: T;

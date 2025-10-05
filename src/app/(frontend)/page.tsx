@@ -1,60 +1,65 @@
-import { cn } from "@/app/(frontend)/lib/utils";
-import { ArrowUpRight, Divide } from "lucide-react";
-import Image from "next/image";
-import { useGSAP } from "@gsap/react";
 import { Suspense } from "react";
-import gsap from "gsap";
-import { SplitText } from "gsap/SplitText";
-import { payload } from "@/app/(frontend)/lib/payload";
-import { HomeCarousel } from "@/app/(frontend)/components/home-carousel";
+import {
+  CarouselItem,
+  HomeCarousel,
+} from "@/app/(frontend)/components/home-carousel";
 import { getArchitectures } from "@/app/(frontend)/actions";
-
-// gsap.registerPlugin(SplitText);
+import { payload } from "@/app/(frontend)/lib/payload";
+import { Media, ProjectType } from "@/payload-types";
 
 async function Hero() {
-  const architectures = await getArchitectures();
+  const [architectures, interiors] = await Promise.all([
+    getArchitectures(),
+    payload.find({
+      collection: "interiors",
+      where: {
+        gallery: {
+          exists: true,
+        },
+      },
+    }),
+  ]);
+
+  const items: CarouselItem[] = [];
+
+  for (const architecture of architectures.docs) {
+    if (!architecture.gallery) {
+      continue;
+    }
+
+    items.push({
+      title: architecture.name,
+      tagline: architecture.tagline,
+      slug: architecture.slug,
+      site: architecture.site,
+      image: architecture.gallery[0] as Media,
+      type: (architecture.projectType as ProjectType).type,
+      workType: "architecture",
+    });
+  }
+
+  for (const interior of interiors.docs) {
+    if (!interior.gallery) {
+      continue;
+    }
+
+    items.push({
+      title: interior.name,
+      slug: interior.slug,
+      site: interior.site,
+      image: interior.gallery[0] as Media,
+      type: (interior.projectType as ProjectType).type,
+      workType: "interior",
+    });
+  }
 
   return (
     <Suspense fallback={<div className="min-h-svh w-full bg-white" />}>
-      <HomeCarousel items={architectures.docs} />
+      <HomeCarousel items={items} />
     </Suspense>
   );
 }
 export default function Home() {
-  // const containerRef = useRef<HTMLDivElement>(null);
-  // useGSAP(
-  //   () => {
-  //     gsap.to("img", {
-  //       autoAlpha: 1,
-  //       duration: 1,
-  //       ease: "expo.out",
-  //     });
-
-  //     SplitText.create("h1", {
-  //       type: "chars",
-  //       onSplit(self) {
-  //         gsap.set("h1", { autoAlpha: 1 });
-
-  //         return gsap.from(self.chars, {
-  //           duration: 0.75,
-  //           autoAlpha: 0,
-  //           stagger: 0.03,
-  //           ease: "expo.in",
-  //         });
-  //       },
-  //     });
-
-  //     gsap.to(".stagger", {
-  //       opacity: 1,
-  //       y: 0,
-  //       stagger: 0.1,
-  //       delay: 1,
-  //       ease: "power2.out",
-  //     });
-  //   },
-  //   { scope: containerRef }
-  // );
-
   return (
     <main>
       <Hero />

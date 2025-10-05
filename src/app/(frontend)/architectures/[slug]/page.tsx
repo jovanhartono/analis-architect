@@ -1,21 +1,52 @@
 import { capitalize } from "@/app/(frontend)/lib/helper";
 import { payload } from "@/app/(frontend)/lib/payload";
-import { ProjectMarquee } from "@/app/(frontend)/architectures/[id]/marquee";
+import { ProjectMarquee } from "@/app/(frontend)/architectures/[slug]/marquee";
 import { Media, ProjectType } from "@/payload-types";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const slug = (await params).slug;
+
+  const {
+    docs: [project],
+  } = await payload.find({
+    collection: "architectures",
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
+  });
+
+  return {
+    title: project.name,
+  };
+}
 
 export default async function ProjectDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
+  const { slug } = await params;
 
-  const project = await payload.findByID({
+  const {
+    docs: [project],
+  } = await payload.find({
     collection: "architectures",
-    id,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
   });
-
   const html = convertLexicalToHTML({ data: project.description });
 
   const list = [

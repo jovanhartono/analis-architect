@@ -5,8 +5,8 @@ import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface Work {
-  id: number;
+export interface Work {
+  slug: string;
   title: string;
   workType: "architecture" | "interior";
   type: ProjectType;
@@ -17,14 +17,14 @@ interface Work {
 }
 
 function WorkCard({ work }: { work: Work }) {
-  const { id, title, media, workType, status, type } = work;
+  const { slug, title, media, workType, status, type } = work;
   return (
     <Link
       prefetch
       href={
         workType === "architecture"
-          ? `/architectures/${work.id}`
-          : `/interiors/${id}`
+          ? `/architectures/${slug}`
+          : `/interiors/${slug}`
       }
       className="group"
     >
@@ -78,7 +78,7 @@ export default async function WorksPage() {
       continue;
     }
     works.push({
-      id: architecture.id,
+      slug: architecture.slug,
       title: architecture.name,
       type: architecture.projectType as ProjectType,
       year: architecture.year,
@@ -94,7 +94,7 @@ export default async function WorksPage() {
       continue;
     }
     works.push({
-      id: interior.id,
+      slug: interior.slug,
       title: interior.name,
       type: interior.projectType as ProjectType,
       year: interior.year,

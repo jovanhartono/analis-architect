@@ -1,3 +1,4 @@
+import { formatSlug } from "@/app/(frontend)/lib/helper";
 import { CollectionConfig } from "payload";
 
 export const Interiors: CollectionConfig = {
@@ -15,6 +16,27 @@ export const Interiors: CollectionConfig = {
       name: "name",
       type: "text",
       required: true,
+    },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      index: true,
+      admin: {
+        placeholder: "Will be auto-geneated based on title",
+        position: "sidebar",
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value, data }) => {
+            if (!value && data?.name) {
+              return formatSlug(data.name);
+            }
+            return value;
+          },
+        ],
+      },
     },
     {
       type: "row",
@@ -78,6 +100,9 @@ export const Interiors: CollectionConfig = {
       relationTo: "media",
       hasMany: true,
       label: "Image Gallery",
+      admin: {
+        position: "sidebar",
+      },
     },
   ],
 };

@@ -21,3 +21,10 @@ export function isMedia(val: unknown): val is Media {
 
   return true;
 }
+
+export const formatSlug = (val: string): string => {
+  return val
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+};
