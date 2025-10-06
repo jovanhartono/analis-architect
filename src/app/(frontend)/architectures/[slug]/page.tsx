@@ -4,6 +4,7 @@ import { ProjectMarquee } from "@/app/(frontend)/architectures/[slug]/marquee";
 import { Media, ProjectType } from "@/payload-types";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export async function generateMetadata({
   params,
@@ -80,11 +81,9 @@ export default async function ProjectDetailPage({
     },
   ].filter((item) => Boolean(item.value));
 
-  const images =
-    project.gallery
-      ?.filter((item): item is Media => typeof item === "object")
-      .map((image) => image.url)
-      .filter((url): url is string => Boolean(url)) ?? [];
+  const media = project.gallery?.filter(
+    (item): item is Media => typeof item === "object"
+  );
 
   return (
     <main>
@@ -96,7 +95,14 @@ export default async function ProjectDetailPage({
         <hr className="w-full border-t-gray-300 mt-8 lg:mt-6" />
       </section>
 
-      {images.length > 0 && <ProjectMarquee images={images} />}
+      {media?.length && <ProjectMarquee media={media} />}
+
+      {/* <Image
+        src={media?.[0].url}
+        width={media?.[0].width || 1000}
+        height={media?.[0].height || 1000}
+        className="w-full"
+      /> */}
 
       <section className="padding grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10 gap-y-4 pt-4 lg:pt-10">
         <div className="col-span-1">

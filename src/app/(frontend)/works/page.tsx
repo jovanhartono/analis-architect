@@ -30,7 +30,7 @@ function WorkCard({ work }: { work: Work }) {
     >
       <figure className="mb-4 break-inside-avoid">
         {isMedia(media) && (
-          <div className="overflow-hidden rounded">
+          <div className="overflow-hidden rounded-xs">
             <Image
               alt={title}
               src={media.url || "https://placehold.co/600x400/png"}

@@ -9,14 +9,15 @@ import {
 import Image from "next/image";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { XIcon } from "lucide-react";
+import { Media } from "@/payload-types";
 
-export function ProjectMarquee({ images }: { images: string[] }) {
+export function ProjectMarquee({ media }: { media: Media[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const openDialog = (src: string) => {
-    setSelectedImage(src);
+  const openDialog = (image: Media) => {
+    setSelectedMedia(image);
     setImageLoaded(false);
     const dialog = dialogRef.current;
     if (dialog) {
@@ -35,7 +36,7 @@ export function ProjectMarquee({ images }: { images: string[] }) {
       // Wait for animation to complete before closing
       setTimeout(() => {
         dialog.close();
-        setSelectedImage(null);
+        setSelectedMedia(null);
         setImageLoaded(false);
       }, 200);
     }
@@ -47,7 +48,7 @@ export function ProjectMarquee({ images }: { images: string[] }) {
 
     const handleClose = () => {
       dialog?.classList.remove("dialog-open");
-      setSelectedImage(null);
+      setSelectedMedia(null);
       setImageLoaded(false);
     };
 
@@ -75,7 +76,7 @@ export function ProjectMarquee({ images }: { images: string[] }) {
         }}
       >
         <CarouselContent className="will-change-transform">
-          {images.map((src, index) => (
+          {media.map((image, index) => (
             <CarouselItem
               className="basis-[min(67%,_400px)] pl-4 will-change-transform"
               key={index}
@@ -88,9 +89,9 @@ export function ProjectMarquee({ images }: { images: string[] }) {
                 height={400}
                 sizes="400w"
                 alt={`image-${index}`}
-                src={src}
+                src={image.url!}
                 className="aspect-square object-cover cursor-pointer"
-                onClick={() => openDialog(src)}
+                onClick={() => openDialog(image)}
               />
             </CarouselItem>
           ))}
@@ -100,38 +101,33 @@ export function ProjectMarquee({ images }: { images: string[] }) {
       {/* Native HTML Dialog */}
       <dialog
         ref={dialogRef}
-        className="backdrop:bg-black/50 border-none overflow-hidden bg-white/90 opacity-0 scale-95 transition-all duration-200 ease-out [&.dialog-open]:opacity-100 [&.dialog-open]:scale-100 m-auto outline-none rounded-md"
+        className="backdrop:bg-black/90 bg-transparent opacity-0 scale-95 transition-all duration-200 ease-out [&.dialog-open]:opacity-100 [&.dialog-open]:scale-100 m-auto outline-none z-50 p-0 max-w-screen-xl"
         onClick={(e) => {
           if (e.target === dialogRef.current) closeDialog();
         }}
       >
-        {selectedImage && (
-          <div className="relative w-[90vw] h-[90vh] max-w-screen-lg p-4">
+        {selectedMedia && (
+          <div className="relative flex items-center justify-center">
             <button
               type="button"
               onClick={closeDialog}
-              className="absolute top-4 right-4 bg-white/90 flex items-center justify-center size-8 rounded-full cursor-pointer z-10 hover:bg-white/70 transition-colors"
+              className="absolute top-3 right-3 flex items-center justify-center size-6 rounded-full cursor-pointer z-10 bg-white"
             >
-              <XIcon className="text-gray-700" />
+              <XIcon className="text-gray-700 size-4" />
             </button>
 
-            {/* Loading skeleton */}
-            {!imageLoaded && (
-              <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg" />
-            )}
-
-            <div className="relative h-full w-full rounded-md overflow-hidden">
-              <Image
-                fill
-                sizes="1024w"
-                src={selectedImage}
-                alt="preview"
-                className={`object-contain rounded-lg transition-all duration-300 ease-out ${
-                  imageLoaded ? "opacity-100" : "opacity-0"
-                }`}
-                onLoad={() => setImageLoaded(true)}
-              />
-            </div>
+            <Image
+              alt="preview"
+              src={selectedMedia.url!}
+              width={selectedMedia.width || 1000}
+              height={selectedMedia.height || 1000}
+              sizes="(max-width: 1024w): 100vw, 1440w"
+              draggable="false"
+              className={`transition-all duration-300 object-contain max-w-[min(1440px,_calc(100vw_-_32px))] max-h-[95vh] ease-out ${
+                imageLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              onLoad={() => setImageLoaded(true)}
+            />
           </div>
         )}
       </dialog>

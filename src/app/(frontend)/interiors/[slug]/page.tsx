@@ -72,11 +72,9 @@ export default async function InteriorDetailPage({
     },
   ].filter((item) => Boolean(item.value));
 
-  const images =
-    project.gallery
-      ?.filter((item): item is Media => typeof item === "object")
-      .map((image) => image.url)
-      .filter((url): url is string => Boolean(url)) ?? [];
+  const media = project.gallery?.filter(
+    (item): item is Media => typeof item === "object"
+  );
 
   return (
     <main>
@@ -85,7 +83,7 @@ export default async function InteriorDetailPage({
         <hr className="w-full border-t-gray-300 mt-8 lg:mt-6" />
       </section>
 
-      {images.length > 0 && <ProjectMarquee images={images} />}
+      {media?.length && <ProjectMarquee media={media} />}
 
       <section className="padding grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10 gap-y-4 pt-4 lg:pt-10">
         <div className="col-span-1">
