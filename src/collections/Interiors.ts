@@ -81,6 +81,10 @@ export const Interiors: CollectionConfig = {
           value: "in_preparation",
         },
         {
+          label: "Under Construction",
+          value: "under_construction",
+        },
+        {
           label: "Completed",
           value: "completed",
         },

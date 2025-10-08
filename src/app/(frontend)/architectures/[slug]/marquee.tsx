@@ -101,7 +101,7 @@ export function ProjectMarquee({ media }: { media: Media[] }) {
       {/* Native HTML Dialog */}
       <dialog
         ref={dialogRef}
-        className="backdrop:bg-black/90 bg-transparent opacity-0 scale-95 transition-all duration-200 ease-out [&.dialog-open]:opacity-100 [&.dialog-open]:scale-100 m-auto outline-none z-50 p-0 max-w-screen-xl"
+        className="backdrop:bg-black/90 backdrop:backdrop-blur-sm bg-transparent opacity-0 scale-95 transition-all duration-200 ease-out [&.dialog-open]:opacity-100 [&.dialog-open]:scale-100 m-auto outline-none z-50 p-0 max-w-screen-xl"
         onClick={(e) => {
           if (e.target === dialogRef.current) closeDialog();
         }}
@@ -121,7 +121,7 @@ export function ProjectMarquee({ media }: { media: Media[] }) {
               src={selectedMedia.url!}
               width={selectedMedia.width || 1000}
               height={selectedMedia.height || 1000}
-              sizes="(max-width: 1024w): 100vw, 1440w"
+              sizes="(max-width: 1024px) 100vw, 1440w"
               draggable="false"
               className={`transition-all duration-300 object-contain max-w-[min(1440px,_calc(100vw_-_32px))] max-h-[95vh] ease-out ${
                 imageLoaded ? "opacity-100" : "opacity-0"

@@ -180,7 +180,7 @@ export interface Architecture {
   siteArea: string;
   buildingArea: string;
   tagline?: string | null;
-  status: 'conceptual' | 'in_preparation' | 'completed';
+  status: 'conceptual' | 'in_preparation' | 'under_construction' | 'completed';
   /**
    * Project long description / narrative
    */
@@ -226,7 +226,7 @@ export interface Interior {
   site: string;
   year: number;
   award?: string | null;
-  status: 'conceptual' | 'in_preparation' | 'completed';
+  status: 'conceptual' | 'in_preparation' | 'under_construction' | 'completed';
   /**
    * Project long description / narrative
    */

@@ -41,7 +41,7 @@ export const Footer = memo(function Footer() {
         <dl className="grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-10">
           {links.map((item, index) => (
             <div key={index} className="space-y-1">
-              <dt className="text-gray-500 text-sm tracking-tight">
+              <dt className="text-gray-500 text-xs tracking-widest uppercase">
                 {item.label}
               </dt>
               <dd className="!text-sm text-balance">
