@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Media, ProjectType } from "@/payload-types";
+import { Media } from "@/payload-types";
 import {
   Carousel,
   CarouselContent,
@@ -51,17 +51,17 @@ export function HomeCarousel({ items }: { items: CarouselItem[] }) {
               }
               className="cursor-default w-full h-full block"
             >
+              <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 z-10"></div>
               <Image
                 priority={i === 0}
                 fetchPriority="high"
                 loading="eager"
-                quality={100}
                 sizes="100vw"
                 src={item.image.url!}
                 width={item.image.width!}
                 height={item.image.height!}
                 alt={`slide-${i}`}
-                className="object-cover brightness-60 w-full h-full"
+                className="object-cover w-full h-full"
               />
               <div className="z-10 absolute bottom-20 left-0 right-0 padding text-white">
                 <span className="font-medium ml-1 lg:absolute lg:right-10 lg:bottom-0">

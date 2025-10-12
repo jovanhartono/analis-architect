@@ -30,6 +30,16 @@ export async function generateMetadata({
   };
 }
 
+export async function generateStaticParams() {
+  const { docs: architectures } = await payload.find({
+    collection: "architectures",
+  });
+
+  return architectures.map(({ slug }) => ({
+    slug,
+  }));
+}
+
 export default async function ProjectDetailPage({
   params,
 }: {

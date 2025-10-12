@@ -200,6 +200,7 @@ export interface Architecture {
     [k: string]: unknown;
   };
   gallery?: (number | Media)[] | null;
+  video?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -246,6 +247,7 @@ export interface Interior {
     [k: string]: unknown;
   };
   gallery?: (number | Media)[] | null;
+  video?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -376,6 +378,7 @@ export interface ArchitecturesSelect<T extends boolean = true> {
   status?: T;
   description?: T;
   gallery?: T;
+  video?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -393,6 +396,7 @@ export interface InteriorsSelect<T extends boolean = true> {
   status?: T;
   description?: T;
   gallery?: T;
+  video?: T;
   updatedAt?: T;
   createdAt?: T;
 }

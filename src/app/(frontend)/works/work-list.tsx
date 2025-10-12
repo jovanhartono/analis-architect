@@ -33,6 +33,7 @@ export interface Work {
   site: string;
   status: string;
   media?: Media | number;
+  video?: Media | null | number;
 }
 
 export type FilterKey = "scope" | "projectType";

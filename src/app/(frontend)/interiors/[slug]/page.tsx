@@ -29,6 +29,16 @@ export async function generateMetadata({
   };
 }
 
+export async function generateStaticParams() {
+  const { docs: interiors } = await payload.find({
+    collection: "interiors",
+  });
+
+  return interiors.map(({ slug }) => ({
+    slug,
+  }));
+}
+
 export default async function InteriorDetailPage({
   params,
 }: {

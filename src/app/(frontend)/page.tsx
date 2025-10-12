@@ -6,6 +6,8 @@ import {
 import { getArchitectures } from "@/app/(frontend)/actions";
 import { payload } from "@/app/(frontend)/lib/payload";
 import { Media, ProjectType } from "@/payload-types";
+import { LandingVideoSection } from "@/app/(frontend)/components/video-section";
+import { transformToWork } from "@/app/(frontend)/lib/utils";
 
 async function Hero() {
   const [architectures, interiors] = await Promise.all([
@@ -59,6 +61,34 @@ async function Hero() {
     </Suspense>
   );
 }
+
+async function VideoSection() {
+  const [{ docs: architectures }, { docs: interiors }] = await Promise.all([
+    payload.find({
+      collection: "architectures",
+      where: {
+        video: {
+          exists: true,
+        },
+      },
+    }),
+    payload.find({
+      collection: "interiors",
+      where: {
+        video: {
+          exists: true,
+        },
+      },
+    }),
+  ]);
+
+  return (
+    <LandingVideoSection
+      works={transformToWork({ architectures, interiors })}
+    />
+  );
+}
+
 export default function Home() {
   return (
     <main>
@@ -106,6 +136,18 @@ export default function Home() {
           </p>
         </article>
       </div>
+
+      {/* <section className="padding padding-y">
+        <p className="text-xl">
+          At Analis Architects, we do not just design buildings, we shape
+          experiences. Every curve, material, and space is intentional, aimed at
+          creating places that inspire, connect, and endure. Allow us to
+          transform your vision into reality, through architecture that
+          resonates, evokes emotion, and establishes a sense of belonging.
+        </p>
+      </section> */}
+
+      <VideoSection />
     </main>
   );
 }

@@ -104,9 +104,13 @@ export const Interiors: CollectionConfig = {
       relationTo: "media",
       hasMany: true,
       label: "Image Gallery",
-      admin: {
-        position: "sidebar",
-      },
+    },
+    {
+      label: "Video",
+      type: "upload",
+      name: "video",
+      relationTo: "media",
+      admin: { position: "sidebar" },
     },
   ],
 };
