@@ -27,7 +27,6 @@ export function LandingVideoSection({ works }: { works: Work[] }) {
         xPercent: -80 * (figures.length - 1),
         ease: "none",
         scrollTrigger: {
-          markers: true,
           trigger: sectionRef.current,
           start: "top 72px",
           anticipatePin: 1,
