@@ -1,8 +1,7 @@
-// storage-adapter-import-placeholder
 import { vercelPostgresAdapter } from "@payloadcms/db-vercel-postgres";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { lexicalEditor, BlocksFeature } from "@payloadcms/richtext-lexical";
 import path from "path";
-import { buildConfig } from "payload";
+import { Block, buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
@@ -17,6 +16,20 @@ import { Interiors } from "@/collections/Interiors";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+export const GalleryBlock: Block = {
+  slug: "gallery", // required
+  interfaceName: "GalleryBlock",
+  fields: [
+    {
+      name: "gallery",
+      type: "upload",
+      hasMany: true,
+      required: true,
+      relationTo: "media",
+    },
+  ],
+};
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -26,7 +39,14 @@ export default buildConfig({
   },
   globals: [CompanyInfo],
   collections: [Users, Media, Architectures, Interiors, ProjectTypes],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      BlocksFeature({
+        blocks: [GalleryBlock],
+      }),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),

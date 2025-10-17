@@ -1,10 +1,9 @@
-import { capitalize } from "@/app/(frontend)/lib/helper";
+import { capitalize, isMedia } from "@/app/(frontend)/lib/helper";
 import { payload } from "@/app/(frontend)/lib/payload";
 import { ProjectMarquee } from "@/app/(frontend)/architectures/[slug]/marquee";
-import { Media, ProjectType } from "@/payload-types";
-import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
+import { ProjectType } from "@/payload-types";
 import { Metadata } from "next";
-import Image from "next/image";
+import { RichTextLexical } from "../../components/lexical/rich-text";
 
 export async function generateMetadata({
   params,
@@ -27,6 +26,10 @@ export async function generateMetadata({
 
   return {
     title: project.name,
+
+    openGraph: {
+      title: project.name,
+    },
   };
 }
 
@@ -58,7 +61,6 @@ export default async function ProjectDetailPage({
     },
     limit: 1,
   });
-  const html = convertLexicalToHTML({ data: project.description });
 
   const list = [
     {
@@ -91,9 +93,7 @@ export default async function ProjectDetailPage({
     },
   ].filter((item) => Boolean(item.value));
 
-  const media = project.gallery?.filter(
-    (item): item is Media => typeof item === "object"
-  );
+  const media = project.gallery?.filter((item) => isMedia(item));
 
   return (
     <main>
@@ -107,14 +107,7 @@ export default async function ProjectDetailPage({
 
       {media?.length && <ProjectMarquee media={media} />}
 
-      {/* <Image
-        src={media?.[0].url}
-        width={media?.[0].width || 1000}
-        height={media?.[0].height || 1000}
-        className="w-full"
-      /> */}
-
-      <section className="padding grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10 gap-y-4 pt-4 lg:pt-10">
+      <section className="padding grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10 gap-y-4 padding-y">
         <div className="col-span-1">
           <ul className="divide-y divide-gray-300 max-lg:text-sm">
             {list.map((item, idx) => (
@@ -129,10 +122,7 @@ export default async function ProjectDetailPage({
           </ul>
         </div>
         <div className="col-span-2">
-          <article
-            className="prose prose-p:text-black [&_>_div_>_*]:first:mt-0"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          <RichTextLexical data={project.description} />
         </div>
       </section>
     </main>

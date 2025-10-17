@@ -1,4 +1,5 @@
 export const siteConfig = {
+  domain: "https://analisarchitects.com",
   address:
     "Ruko Elang Laut Boulevard Blok D No.60, Pantai Indah Kapuk, Jakarta Utara, Indonesia",
   phone_number: "6287779119390",

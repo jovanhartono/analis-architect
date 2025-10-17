@@ -137,16 +137,6 @@ export default function Home() {
         </article>
       </div>
 
-      {/* <section className="padding padding-y">
-        <p className="text-xl">
-          At Analis Architects, we do not just design buildings, we shape
-          experiences. Every curve, material, and space is intentional, aimed at
-          creating places that inspire, connect, and endure. Allow us to
-          transform your vision into reality, through architecture that
-          resonates, evokes emotion, and establishes a sense of belonging.
-        </p>
-      </section> */}
-
       <VideoSection />
     </main>
   );

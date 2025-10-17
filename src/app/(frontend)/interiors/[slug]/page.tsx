@@ -2,8 +2,8 @@ import { capitalize } from "@/app/(frontend)/lib/helper";
 import { payload } from "@/app/(frontend)/lib/payload";
 import { ProjectMarquee } from "@/app/(frontend)/architectures/[slug]/marquee";
 import { Media, ProjectType } from "@/payload-types";
-import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 import { Metadata } from "next";
+import { RichTextLexical } from "../../components/lexical/rich-text";
 
 export async function generateMetadata({
   params,
@@ -57,7 +57,6 @@ export default async function InteriorDetailPage({
     },
     limit: 1,
   });
-  const html = convertLexicalToHTML({ data: project.description });
 
   const list = [
     {
@@ -83,7 +82,7 @@ export default async function InteriorDetailPage({
   ].filter((item) => Boolean(item.value));
 
   const media = project.gallery?.filter(
-    (item): item is Media => typeof item === "object"
+    (item): item is Media => typeof item === "object",
   );
 
   return (
@@ -95,7 +94,7 @@ export default async function InteriorDetailPage({
 
       {media?.length && <ProjectMarquee media={media} />}
 
-      <section className="padding grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10 gap-y-4 pt-4 lg:pt-10">
+      <section className="padding grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10 gap-y-4 padding-y">
         <div className="col-span-1">
           <ul className="divide-y divide-gray-300 max-lg:text-sm">
             {list.map((item, idx) => (
@@ -110,10 +109,7 @@ export default async function InteriorDetailPage({
           </ul>
         </div>
         <div className="col-span-2">
-          <article
-            className="prose prose-p:text-black [&_>_div_>_*]:first:mt-0"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          <RichTextLexical data={project.description} />
         </div>
       </section>
     </main>
