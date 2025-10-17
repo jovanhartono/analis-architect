@@ -1,4 +1,5 @@
 import { formatSlug } from "@/app/(frontend)/lib/helper";
+import { revalidatePath } from "next/cache";
 import { CollectionConfig } from "payload";
 
 export const Architectures: CollectionConfig = {
@@ -132,4 +133,15 @@ export const Architectures: CollectionConfig = {
       admin: { position: "sidebar" },
     },
   ],
+  hooks: {
+    afterOperation: [
+      async ({ operation, result }) => {
+        if (["create", "update", "delete"].includes(operation)) {
+          revalidatePath("/works");
+          revalidatePath("/gallery");
+          revalidatePath(`/architectures/${result.slug}`);
+        }
+      },
+    ],
+  },
 };
