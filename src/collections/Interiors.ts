@@ -117,7 +117,7 @@ export const Interiors: CollectionConfig = {
   hooks: {
     afterOperation: [
       async ({ operation, result }) => {
-        if (["create", "update", "delete"].includes(operation)) {
+        if (["create", "updateByID", "deleteByID"].includes(operation)) {
           revalidatePath("/works");
           revalidatePath("/gallery");
           revalidatePath(`/interiors/${result.slug}`);
