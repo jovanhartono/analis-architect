@@ -34,6 +34,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="apple-mobile-web-app-title" content="Analis Architects" />
+        <link
+          rel="preconnect"
+          href="https://tfslhhlj4cdsasg9.public.blob.vercel-storage.com"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         <Header />
