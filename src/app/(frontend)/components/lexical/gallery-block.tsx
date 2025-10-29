@@ -28,7 +28,7 @@ export const GalleryBlock = ({ gallery }: GalleryBlockProps) => {
               loading="eager"
               width={400}
               height={400}
-              sizes="400w"
+              sizes="400px"
               alt={`image-${index}`}
               src={image.url!}
               className="aspect-square object-cover cursor-pointer"

@@ -32,7 +32,7 @@ export const Footer = memo(function Footer() {
             width={32}
             height={32}
             src={logo}
-            sizes="32w"
+            sizes="32px"
             className="size-8"
           />
           <p className="text-xl tracking-tight">Analis Architect</p>

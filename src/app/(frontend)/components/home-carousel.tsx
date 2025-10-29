@@ -25,7 +25,7 @@ export type CarouselItem = {
 // todo: can also accept interior. make a general type. normalize on Hero
 export function HomeCarousel({ items }: { items: CarouselItem[] }) {
   const plugin = useRef([
-    Autoplay({ delay: 5000, stopOnInteraction: false }),
+    Autoplay({ delay: 7000, stopOnInteraction: false }),
     Fade(),
   ]);
 
@@ -54,9 +54,8 @@ export function HomeCarousel({ items }: { items: CarouselItem[] }) {
               <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 z-10"></div>
               <Image
                 priority={i === 0}
-                fetchPriority="high"
-                loading="eager"
                 sizes="100vw"
+                quality={100}
                 src={item.image.url!}
                 width={item.image.width!}
                 height={item.image.height!}

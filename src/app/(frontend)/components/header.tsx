@@ -34,7 +34,7 @@ export const Header = memo(function Header() {
           width={32}
           height={32}
           alt="logo"
-          sizes="32w"
+          sizes="32px"
           className={cn(
             "size-8 transition duration-400 ease-in-out cursor-pointer",
             {

@@ -95,7 +95,7 @@ export default function DialogImageProvider({
               src={selectedMedia.url!}
               width={selectedMedia.width || 1000}
               height={selectedMedia.height || 1000}
-              sizes="(max-width: 1024px) 100vw, 1440w"
+              sizes="(max-width: 1024px) 100vw, 1440px"
               draggable="false"
               className={`transition-all duration-300 object-contain max-w-[min(1440px,_calc(100vw_-_32px))] max-h-[95vh] ease-out ${
                 imageLoaded ? "opacity-100" : "opacity-0"
